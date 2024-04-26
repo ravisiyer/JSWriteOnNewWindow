@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body onload="handleLoad()">
+    BB document
+    <script>
+      function handleLoad() {
+        console.log(`window.name = ${window.name}`);
+        if (window.opener) {
+          console.log(`window.opener.name = ${window.opener.name}`);
+          if (window.opener.name === "BBIndex") {
+            if (typeof window.opener.writeBB === "function") {
+              if (window.opener.writeBB()) {
+                console.log(
+                  "window.opener.writeBB() invoked and returned success (true)"
+                );
+                return;
+              } else {
+                console.log(
+                  "window.opener.writeBB() was invoked but returned failure (false)"
+                );
+              }
+            } else {
+              console.log(
+                "window.opener.writeBB is not a function (type). Its value is:"
+              );
+              console.log(window.opener.writeBB);
+            }
+          }
+        } else {
+          console.log(
+            "window.opener evaluates to false (is probably undefined or null)"
+          );
+        }
+        alert(
+          "You seem to have come directly to this page which is supposed to be " +
+            "automatically opened by index page window" +
+            " OR index page window has been closed or reloaded." +
+            " Blogbook will not be written to this page. " +
+            "Please close this window."
+        );
+      }
+    </script>
+  </body>
+</html>
